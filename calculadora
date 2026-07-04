@@ -1,0 +1,80 @@
+ import java.util.Scanner;
+import java.util.Scanner;
+
+public class Main {
+     public static void main(String[] args) {
+          Scanner sc = new Scanner(System.in);
+          int opcion = -1;
+
+          // Bucle principal para que la calculadora no se cierre hasta que elijan salir (0)
+          while (opcion != 0) {
+               System.out.println("\n" + "-".repeat(20));
+               System.out.println("----- CALCULADORA -----");
+               System.out.println("-".repeat(20));
+               System.out.println("1. Suma");
+               System.out.println("2. Resta");
+               System.out.println("3. Multiplicación");
+               System.out.println("4. División");
+               System.out.println("0. Salir");
+               System.out.print("Ingrese su opción: ");
+
+               // Validar que la opción elegida sea un número entero
+               while (!sc.hasNextInt()) {
+                    System.out.println("Error: ¡Debes ingresar una opción numérica válida!");
+                    System.out.print("Ingrese su opción: ");
+                    sc.next(); // Limpia la letra incorrecta
+               }
+               opcion = sc.nextInt();
+
+               // Si eligen 0, sale del bucle directamente
+               if (opcion == 0) {
+                    System.out.println("Saliendo de la calculadora... ¡Adiós!");
+                    break;
+               }
+
+               // Validar que el número esté dentro del rango del menú
+               if (opcion < 1 || opcion > 4) {
+                    System.out.println("Opción inválida. Intente de nuevo.");
+                    continue; // Regresa al inicio del menú principal
+               }
+
+               // Pedir los valores para la operación seleccionada
+               System.out.print("INGRESE EL PRIMER VALOR: ");
+               int numero1 = validarEntradaNumero(sc);
+
+               System.out.print("INGRESE EL SEGUNDO VALOR: ");
+               int numero2 = validarEntradaNumero(sc);
+
+               // Estructura switch como la de tu imagen para procesar la operación
+               switch (opcion) {
+                    case 1:
+                         System.out.printf("El resultado de %d + %d = %d%n", numero1, numero2, (numero1 + numero2));
+                         break;
+                    case 2:
+                         System.out.printf("El resultado de %d - %d = %d%n", numero1, numero2, (numero1 - numero2));
+                         break;
+                    case 3:
+                         System.out.printf("El resultado de %d * %d = %d%n", numero1, numero2, (numero1 * numero2));
+                         break;
+                    case 4:
+                         if (numero2 == 0) {
+                              System.out.println("Error: No se puede dividir entre cero.");
+                         } else {
+                              System.out.printf("El resultado de %d / %d = %.2f%n", numero1, numero2, ((double) numero1 / numero2));
+                         }
+                         break;
+               }
+          }
+          sc.close();
+     }
+
+     // Método auxiliar para que tampoco falle si ponen letras en los valores matemáticos
+     private static int validarEntradaNumero(Scanner sc) {
+          while (!sc.hasNextInt()) {
+               System.out.println("Error: ¡Debes ingresar un número entero!");
+               System.out.print("INGRESE EL VALOR NUEVAMENTE: ");
+               sc.next();
+          }
+          return sc.nextInt();
+     }
+}
